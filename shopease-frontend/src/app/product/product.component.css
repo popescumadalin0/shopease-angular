@@ -1,0 +1,44 @@
+.mat-elevation-z8 {
+  margin: 2% auto;
+  width: 70%;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+
+button {
+  margin: 16px 8px;
+}
+
+/*:host {
+  background-image: url('./../../assets/images/HomeBackgroundImg.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}*/
+
+/*.custom-mat-table {
+  width: 80%;
+  height:  100%;
+  margin: auto;
+  margin-top: -30%;
+}*/
+
+.product-image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  padding: 0; 
+}
+
+mat-form-field {
+  width: 25%;
+}
+
+.mat-column-actions {
+  padding-left: 20px;
+  width: 10%;
+  /* Remove width and max-width properties */
+}

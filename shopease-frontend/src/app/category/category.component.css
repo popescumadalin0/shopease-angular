@@ -1,0 +1,56 @@
+
+  button {
+    margin: 16px 8px;
+  }
+
+  /*:host {
+    background-image: url('./../../assets/images/HomeBackgroundImg.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }*/
+
+  /*.custom-mat-table {
+    width: 80%;
+    height:  100%;
+    margin: auto;
+    margin-top: -30%;
+  }*/
+
+/* Add this CSS to your component's styles or global styles */
+
+.mat-elevation-z8 {
+  display: inline-block;
+  max-width: 100%;
+   margin: 2% 20%;
+   
+}
+
+
+.custom-mat-table {
+  padding: 20px;
+  display: inline-block; /* Set display to inline-block */
+  width: auto; /* Allow the table to adjust its width based on column contents */
+  max-width: 100%; /* Ensure the table does not exceed 70% of its container */
+}
+
+.category-image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto; /* Center the image horizontally */
+  padding: 0; /* Remove padding */
+}
+
+.mat-column-name,
+.mat-column-description,
+.mat-column-actions,
+.mat-column-image {
+  padding-left: 20px;
+  max-width: 20%;
+  /* Remove width and max-width properties */
+}
+
+

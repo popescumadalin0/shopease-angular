@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Edit Category</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="formInstance">
+    <div>
+      <mat-form-field class="fullWidth" appearance="outline">
+        <mat-label>Name *</mat-label>
+        <input matInput type="text" name="name" formControlName="name">
+        <mat-error *ngIf="formInstance.controls['name'].hasError('required')">Field required</mat-error>
+
+      </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+      <mat-form-field class="fullWidth" appearance="outline">
+        <mat-label>Description *</mat-label>
+        <textarea matInput name="description" formControlName="description"></textarea>
+        <mat-error *ngIf="formInstance.controls['description'].hasError('required')">Field required</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<div class="mt-5" mat-dialog-actions>
+  <button mat-raised-button color="primary" [disabled]="formInstance.invalid" (click)="save()">Save</button>
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+</div>

@@ -1,0 +1,21 @@
+:host {
+  background-image: url('./../../../assets/images/HomeBackgroundImg.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  :host {
+    min-height: calc(100vh - 84px);
+  }
+}
+
+.form {
+  z-index: 1;
+}
+

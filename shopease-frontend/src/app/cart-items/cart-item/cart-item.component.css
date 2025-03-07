@@ -1,0 +1,53 @@
+.mat-elevation-z8 {
+  margin: 2% auto;
+  width: 80%;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+
+button {
+  margin: 1% auto;
+}
+
+.total-cost-box {
+  margin-top: 1%;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  margin-left: 10%;
+}
+
+.total-cost-box span:first-child {
+  font-weight: bold;
+}
+
+.total-cost-box span:last-child {
+  font-size: 1.2em;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 2%;
+  margin-left: 1%;
+}
+
+button:hover {
+  background-color: #3f51b5;
+  color: white;
+}
+
+#warm {
+  margin-left: 10%;
+}

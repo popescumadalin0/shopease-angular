@@ -1,0 +1,47 @@
+<button mat-raised-button id="warm" color="warn" *ngIf="currentUser.role === 'USER'" (click)="deleteAll()">Empty Cart</button>
+<button mat-raised-button color="primary" *ngIf="currentUser.role === 'USER'" (click)="createOrder()">Checkout</button>
+
+<div class="total-cost-box">
+  <span>Total Cost:</span>
+  <span>{{ calculateTotalCost() }}</span>
+</div>
+
+<div class="mat-elevation-z8">
+<table mat-table [dataSource]="cartItems" class="custom-mat-table">
+    <!-- Displaying columns -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let cartItem">{{ cartItem.id }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let cartItem">{{ cartItem.quantity }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="productId">
+      <th mat-header-cell *matHeaderCellDef>Product</th>
+      <td mat-cell *matCellDef="let cartItem">{{ getProductById(cartItem.productId)?.name }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="calculatedCost">
+      <th mat-header-cell *matHeaderCellDef>Cost($)</th>
+      <td mat-cell *matCellDef="let cartItem">{{ cartItem.quantity * getProductById(cartItem.productId)?.cost }}</td>
+    </ng-container>
+  
+    <!-- Buttons for actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let cartItem">
+        <button mat-icon-button color="warn" *ngIf="currentUser.role === 'USER'" (click)="delete(cartItem.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <!-- Table rows -->
+    <tr mat-header-row *matHeaderRowDef="['id', 'quantity', 'productId', 'calculatedCost', 'actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'quantity', 'productId', 'calculatedCost', 'actions']"></tr>
+  </table>
+</div>
+  
