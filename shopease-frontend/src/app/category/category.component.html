@@ -1,3 +1,4 @@
+<button mat-raised-button *ngIf="currentUser.role === 'ADMIN'" (click)="create()"> Add category</button>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="categories" class="custom-mat-table">
     <!-- Displaying columns -->
@@ -31,7 +32,7 @@
         </button>
         <button mat-icon-button color="primary" (click)="loadProductsByCategory(category.id)">
           <mat-icon>view_list</mat-icon>
-        </button>          
+        </button>
       </td>
     </ng-container>
 
