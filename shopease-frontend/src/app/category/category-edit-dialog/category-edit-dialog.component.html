@@ -18,6 +18,20 @@
         <mat-error *ngIf="formInstance.controls['description'].hasError('required')">Field required</mat-error>
       </mat-form-field>
     </div>
+
+    <div class="mt-5">
+      <div class="fullWidth" appearance="outline">
+        <label>Upload Image</label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden #fileInput>
+        <div class="image-picker" (click)="fileInput.click()">
+          <img *ngIf="selectedImage" [src]="selectedImage" class="preview-image">
+          <span *ngIf="!selectedImage" class="placeholder-text">Click to upload</span>
+        </div>
+        <mat-error *ngIf="formInstance.controls['image'].hasError('required')">
+          Image is required
+        </mat-error>
+      </div>
+    </div>
   </form>
 </div>
 

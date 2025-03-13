@@ -12,6 +12,7 @@ import { Category } from '../category';
 export class CategoryCreateDialogComponent implements OnInit {
   formInstance: FormGroup;
 
+  selectedImage: string | ArrayBuffer | null = null;
   constructor(
     public dialogRef: MatDialogRef<CategoryCreateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Category,
@@ -20,6 +21,7 @@ export class CategoryCreateDialogComponent implements OnInit {
     this.formInstance = new FormGroup({
       "name": new FormControl('', Validators.required),
       "description": new FormControl('', Validators.required),
+      "image": new FormControl('', Validators.required),
     });
   }
 
@@ -30,7 +32,7 @@ export class CategoryCreateDialogComponent implements OnInit {
       NaN,
       this.formInstance.value.name,
       this.formInstance.value.description,
-      ""
+      this.formInstance.value.image,
     );
 
     this.categoryService.createCategory(newCategory).subscribe(
@@ -41,5 +43,17 @@ export class CategoryCreateDialogComponent implements OnInit {
         console.error('Error creating category', error);
       }
     );
+  }
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImage = reader.result;
+        this.formInstance.patchValue({image: reader.result}); // Salvăm imaginea în FormControl
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

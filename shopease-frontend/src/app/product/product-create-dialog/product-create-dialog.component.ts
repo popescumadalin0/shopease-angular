@@ -17,6 +17,8 @@ export class ProductCreateDialogComponent implements OnInit {
   formInstance: FormGroup;
   categories: Category[] = []; // Add this property to store categories
 
+  selectedImage: string | ArrayBuffer | null = null;
+
   constructor(
     public dialogRef: MatDialogRef<ProductCreateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product,
@@ -31,6 +33,7 @@ export class ProductCreateDialogComponent implements OnInit {
       "description": new FormControl('', Validators.required),
       "cost": new FormControl('', Validators.required),
       "categoryId": new FormControl('', Validators.required),
+      "image": new FormControl('', Validators.required)
     });
   }
 
@@ -55,7 +58,7 @@ export class ProductCreateDialogComponent implements OnInit {
       this.formInstance.value.description,
       this.formInstance.value.categoryId,
       this.formInstance.value.cost,
-      ""
+      this.formInstance.value.image
     );
 
     this.productService.createProduct(newProduct).subscribe(
@@ -66,5 +69,17 @@ export class ProductCreateDialogComponent implements OnInit {
         console.error('Error creating product', error);
       }
     );
+  }
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImage = reader.result;
+        this.formInstance.patchValue({ image: reader.result }); // Salvăm imaginea în FormControl
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

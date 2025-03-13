@@ -1,11 +1,11 @@
 // product-edit-dialog.component.ts
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { Category } from 'src/app/category/category';
-import { CategoryService } from 'src/app/category/category.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {Product} from '../product';
+import {ProductService} from '../product.service';
+import {Category} from 'src/app/category/category';
+import {CategoryService} from 'src/app/category/category.service';
 
 @Component({
   selector: 'app-product-edit-dialog',
@@ -16,6 +16,8 @@ import { CategoryService } from 'src/app/category/category.service';
 export class ProductEditDialogComponent implements OnInit {
   formInstance: FormGroup;
   categories: Category[] = [];
+
+  selectedImage: string | ArrayBuffer | null = null;
 
   constructor(
     public dialogRef: MatDialogRef<ProductEditDialogComponent>,
@@ -31,7 +33,8 @@ export class ProductEditDialogComponent implements OnInit {
       "provider": new FormControl('', Validators.required),
       "description": new FormControl('', Validators.required),
       "categoryId": new FormControl('', Validators.required),
-      "cost": new FormControl('', Validators.required) // Add cost field
+      "cost": new FormControl('', Validators.required),
+      "image": new FormControl('', Validators.required),
     });
 
     this.formInstance.setValue(data);
@@ -58,7 +61,7 @@ export class ProductEditDialogComponent implements OnInit {
       this.formInstance.value.description,
       this.formInstance.value.categoryId,
       this.formInstance.value.cost,
-      ""
+      this.formInstance.value.image,
     );
 
     this.productService.updateProduct(updatedProduct).subscribe(
@@ -69,5 +72,17 @@ export class ProductEditDialogComponent implements OnInit {
         console.error('Error updating product', error);
       }
     );
+  }
+
+  onFileSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedImage = reader.result;
+        this.formInstance.patchValue({image: reader.result}); // Salvăm imaginea în FormControl
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

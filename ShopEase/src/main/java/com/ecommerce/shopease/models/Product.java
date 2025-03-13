@@ -34,6 +34,7 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Lob
     @Column(name = "image")
     private String image;
 

@@ -18,6 +18,7 @@ public class Category {
     @Column(name = "description")
     private String description;
 
+    @Lob
     @Column(name = "image")
     private String image;
 }

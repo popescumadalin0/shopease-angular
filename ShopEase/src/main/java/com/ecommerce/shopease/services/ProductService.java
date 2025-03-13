@@ -82,9 +82,11 @@ public class ProductService {
         product.setCost(productDto.getCost());
         product.setImage(productDto.getImage());
 
-        luceneService.indexProduct(product.getId(), product.getSpecifications());
+        var addedProduct = productRepository.save(product);
 
-        return new ProductDto(productRepository.save(product));
+        luceneService.indexProduct(addedProduct.getId(), product.getSpecifications());
+
+        return new ProductDto(addedProduct);
     }
 
     public ProductDto updateProduct(ProductDto productDto) {

@@ -10,7 +10,7 @@
         <mat-error *ngIf="formInstance.controls['name'].hasError('required')">Field required</mat-error>
       </mat-form-field>
     </div>
- 
+
     <div class="mt-5">
       <mat-form-field class="fullWidth" appearance="outline">
         <mat-label>Specifications</mat-label>
@@ -61,6 +61,20 @@
         <input matInput type="number" name="cost" formControlName="cost">
         <mat-error *ngIf="formInstance.controls['cost'].hasError('required')">Field required</mat-error>
       </mat-form-field>
+    </div>
+
+    <div class="mt-5">
+      <div class="fullWidth" appearance="outline">
+        <label>Upload Image</label>
+        <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden #fileInput>
+        <div class="image-picker" (click)="fileInput.click()">
+          <img *ngIf="selectedImage" [src]="selectedImage" class="preview-image">
+          <span *ngIf="!selectedImage" class="placeholder-text">Click to upload</span>
+        </div>
+        <mat-error *ngIf="formInstance.controls['image'].hasError('required')">
+          Image is required
+        </mat-error>
+      </div>
     </div>
   </form>
 </div>
