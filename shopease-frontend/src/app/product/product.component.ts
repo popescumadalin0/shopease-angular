@@ -21,6 +21,11 @@ export class ProductComponent implements OnInit {
   currentUser: any;
   categories: Category[] = [];
   quantity: number = 1; // Default value is 1
+  searchQuery: string = "";
+  suggestions: string[] = [];
+  isSearchFocused: boolean = false;
+  sortOrder: string = 'desc'; // Default sort order
+
 
   constructor(
     private productService: ProductService,
@@ -61,6 +66,63 @@ export class ProductComponent implements OnInit {
     const category = this.categories.find(cat => cat.id === categoryId);
     return category ? category.name : '';
   }
+
+  // Function to handle sorting by ascending order
+  sortByAscending() {
+    this.sortOrder = 'asc';
+    this.search(); // Trigger search with updated sort order
+  }
+
+  // Function to handle sorting by descending order
+  sortByDescending() {
+    this.sortOrder = 'desc';
+    this.search(); // Trigger search with updated sort order
+  }
+  
+  search() {
+    if (this.searchQuery.trim() === '') {
+      // If the search query is empty, retrieve all products
+      this.productService.getProducts().subscribe(
+        products => {
+          this.products = products;
+        },
+        error => {
+          console.error('Error loading products:', error);
+        }
+      );
+    } else {
+      // Also, perform the search with the entered query
+      this.productService.searchProductsBySpecifications(this.searchQuery, this.sortOrder).subscribe(
+        products => {
+          this.products = products;
+        },
+        error => {
+          console.error('Error searching products:', error);
+        }
+      );
+    }
+  }
+  
+  selectSuggestion(suggestion: string): void {
+    this.searchQuery = suggestion;
+    this.suggestions = [];
+  }
+
+  fetchSuggestions() {
+    if (this.searchQuery.trim() !== '') {
+      this.productService.getPredictiveSearchSuggestions(this.searchQuery).subscribe(
+        suggestions => {
+          this.suggestions = suggestions;
+        },
+        error => {
+          console.error('Error fetching predictive search suggestions:', error);
+        }
+      );
+    } else {
+      this.suggestions = []; // Clear suggestions if search query is empty
+    }
+  }  
+
 
   edit(product: Product) {
     const dialogRef = this.dialog.open(ProductEditDialogComponent, {
@@ -125,4 +187,18 @@ export class ProductComponent implements OnInit {
       }
     );
   }
+
+  showSuggestions() {
+    this.isSearchFocused = true;
+  }
+
+  hideSuggestions(event: FocusEvent): void {
+    setTimeout(() => {
+      if (!event.relatedTarget || !(event.relatedTarget as HTMLElement).classList.contains('suggestion-item')) {
+        // Hide suggestions only if the related target is not a suggestion item
+        this.isSearchFocused = false;
+      }
+    }, 200); // Adjust the delay as needed (in milliseconds)
+  }
+  
 }
